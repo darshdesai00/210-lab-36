@@ -2,12 +2,18 @@
 #ifndef INTBINARYTREE_H
 #define INTBINARYTREE_H
 
+#include <iostream>
+#include <string>
+using namespace std;
+
 // The IntBinaryTree class manages a binary tree of integers.
 class IntBinaryTree {
+
 private:
-   // TreeNode is a private structure for IntBinaryTree nodes.
+   
+// TreeNode is a private structure for IntBinaryTree nodes.
    struct TreeNode {
-      int value;         // The value in the node
+      string value;
       TreeNode *left;    // Pointer to left child node
       TreeNode *right;   // Pointer to right child node
    };
@@ -32,9 +38,8 @@ public:
    ~IntBinaryTree()    { destroySubTree(root); }
 
    // Public interface for inserting, searching, and removing nodes.
-   void insertNode(int);
-   bool searchNode(int);
-   void remove(int);
+   void insertNode(string);
+   void remove(string);
 
    // Public wrappers for tree traversal functions.
    void displayInOrder() const     {  displayInOrder(root); }
@@ -168,21 +173,23 @@ void IntBinaryTree::displayInOrder(TreeNode *nodePtr) const {
 
 // The displayPreOrder member function displays the values      
 // in the subtree pointed to by nodePtr, via preorder traversal.
-void IntBinaryTree::displayPreOrder(TreeNode *nodePtr) const {
+void IntBinaryTree::destroySubTree(TreeNode *nodePtr) const {
    if (nodePtr) {
       cout << nodePtr->value << endl;
-      displayPreOrder(nodePtr->left);     
-      displayPreOrder(nodePtr->right);
-   }
+      destroySubTree(nodePtr->left);     
+      destroySubTree(nodePtr->right);
+      delete nodePtr;
+    }
 }
 
 // The displayPostOrder member function displays the values     
 // in the subtree pointed to by nodePtr, via postorder traversal.
-void IntBinaryTree::displayPostOrder(TreeNode *nodePtr) const {
+void IntBinaryTree::displayInOrder(TreeNode *nodePtr) const {
    if (nodePtr) {
-      displayPostOrder(nodePtr->left);    
-      displayPostOrder(nodePtr->right);
+      displayInOrder(nodePtr->left);    
       cout << nodePtr->value << endl;
+      displayInOrder(nodePtr->right);
+      
    }
 }
 
