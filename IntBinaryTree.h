@@ -13,7 +13,7 @@ private:
    
 // TreeNode is a private structure for IntBinaryTree nodes.
    struct TreeNode {
-      string value;
+      string value;       // changed from int to string
       TreeNode *left;    // Pointer to left child node
       TreeNode *right;   // Pointer to right child node
    };
@@ -24,7 +24,7 @@ private:
    // Private member functions for internal operations.
    void insert(TreeNode *&, TreeNode *&);
    void destroySubTree(TreeNode *);
-   void deleteNode(int, TreeNode *&);
+   void deleteNode(string, TreeNode *&);
    void makeDeletion(TreeNode *&);
    void displayInOrder(TreeNode *) const;
    void displayPreOrder(TreeNode *) const;
@@ -47,11 +47,6 @@ public:
    void displayPostOrder() const   {  displayPostOrder(root); }
 };
 
-// Implementation file for the IntBinaryTree class
-#include <iostream>
-#include "IntBinaryTree.h"
-using namespace std;
-
 // insert accepts a TreeNode pointer and a pointer to a node.
 // The function inserts the node into the tree pointed to by 
 // the TreeNode pointer. This function is called recursively.
@@ -66,12 +61,12 @@ void IntBinaryTree::insert(TreeNode *&nodePtr, TreeNode *&newNode) {
 
 // insertNode creates a new node to hold num as its value,
 // and passes it to the insert function.                  
-void IntBinaryTree::insertNode(int num) {
+void IntBinaryTree::insertNode(string item) {
    TreeNode *newNode;      // Pointer to a new node.
 
    // Create a new node and store num in it.
    newNode = new TreeNode;
-   newNode->value = num;
+   newNode->value = item;
    newNode->left = newNode->right = nullptr;
    
    // Insert the node.
@@ -89,42 +84,25 @@ void IntBinaryTree::destroySubTree(TreeNode *nodePtr) {
       delete nodePtr;
    }
 }
-   
-
-// searchNode determines if a value is present in  
-// the tree. If so, the function returns true.     
-// Otherwise, it returns false.                    
-bool IntBinaryTree::searchNode(int num) {
-   TreeNode *nodePtr = root;
-
-   while (nodePtr)    {
-      if (nodePtr->value == num)
-         return true;
-      else if (num < nodePtr->value)
-         nodePtr = nodePtr->left;
-      else
-         nodePtr = nodePtr->right;
-   }
-   return false;
-}
 
 // remove calls deleteNode to delete the      
 // node whose value member is the same as num.
-void IntBinaryTree::remove(int num) {
-   deleteNode(num, root);
+void IntBinaryTree::remove(string item) {
+   deleteNode(item, root);
 }
 
 // deleteNode deletes the node whose value 
 // member is the same as num.              
-void IntBinaryTree::deleteNode(int num, TreeNode *&nodePtr) {
-   if (num < nodePtr->value)
-      deleteNode(num, nodePtr->left);
-   else if (num > nodePtr->value)
-      deleteNode(num, nodePtr->right);
+void IntBinaryTree::deleteNode(string item, TreeNode *&nodePtr) {
+   if (!nodePtr)
+      return;
+   else if (item < nodePtr->value)
+      deleteNode(item, nodePtr->left);
+   else if (item > nodePtr->value)
+      deleteNode(item, nodePtr->right);
    else
       makeDeletion(nodePtr);
 }
-
 
 // makeDeletion takes a reference to a pointer to the node 
 // that is to be deleted. The node is removed and the      
@@ -144,52 +122,25 @@ void IntBinaryTree::makeDeletion(TreeNode *&nodePtr) {
       tempNodePtr = nodePtr;
       nodePtr = nodePtr->right;  // Reattach the right child
       delete tempNodePtr;
-   }
-   // If the node has two children.
-   else {
-      // Move one node the right.
-      tempNodePtr = nodePtr->right;
-      // Go to the end left node.
-      while (tempNodePtr->left)
-         tempNodePtr = tempNodePtr->left;
-      // Reattach the left subtree.
-      tempNodePtr->left = nodePtr->left;
-      tempNodePtr = nodePtr;
-      // Reattach the right subtree.
-      nodePtr = nodePtr->right;
-      delete tempNodePtr;
-   }
-}
-
-// The displayInOrder member function displays the values       
-// in the subtree pointed to by nodePtr, via inorder traversal. 
-void IntBinaryTree::displayInOrder(TreeNode *nodePtr) const {
-   if (nodePtr) {
-      displayInOrder(nodePtr->left);
-      cout << nodePtr->value << endl;
-      displayInOrder(nodePtr->right);
-   }
-}
+   
 
 // The displayPreOrder member function displays the values      
 // in the subtree pointed to by nodePtr, via preorder traversal.
-void IntBinaryTree::destroySubTree(TreeNode *nodePtr) const {
+void IntBinaryTree::displayPreOrder(TreeNode *nodePtr) const {
    if (nodePtr) {
       cout << nodePtr->value << endl;
-      destroySubTree(nodePtr->left);     
-      destroySubTree(nodePtr->right);
-      delete nodePtr;
-    }
+      displayPreOrder(nodePtr->left);     
+      displayPreOrder(nodePtr->right);
+   }
 }
 
 // The displayPostOrder member function displays the values     
 // in the subtree pointed to by nodePtr, via postorder traversal.
-void IntBinaryTree::displayInOrder(TreeNode *nodePtr) const {
+void IntBinaryTree::displayPostOrder(TreeNode *nodePtr) const {
    if (nodePtr) {
-      displayInOrder(nodePtr->left);    
+      displayPostOrder(nodePtr->left);    
+      displayPostOrder(nodePtr->right);
       cout << nodePtr->value << endl;
-      displayInOrder(nodePtr->right);
-      
    }
 }
 
