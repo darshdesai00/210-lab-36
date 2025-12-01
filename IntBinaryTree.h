@@ -40,6 +40,7 @@ public:
    // Public interface for inserting, searching, and removing nodes.
    void insertNode(string);
    void remove(string);
+   bool searchNode(string);
 
    // Public wrappers for tree traversal functions.
    void displayInOrder() const     {  displayInOrder(root); }
@@ -50,6 +51,13 @@ public:
 // insert accepts a TreeNode pointer and a pointer to a node.
 // The function inserts the node into the tree pointed to by 
 // the TreeNode pointer. This function is called recursively.
+void IntBinaryTree::insertNode(string item) {
+   TreeNode *newNode = new TreeNode;
+   newNode->value = item;
+   newNode->left = newNode->right = nullptr;
+   insert(root, newNode);
+}
+
 void IntBinaryTree::insert(TreeNode *&nodePtr, TreeNode *&newNode) {
    if (!nodePtr)
       nodePtr = newNode;                  // Insert the node.

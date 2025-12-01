@@ -50,19 +50,50 @@ int main() {
             tree.insertNode(code);
             cout << code << " added.\n";
             break;
-        
+
         case 2:
             cout << "Enter code to delete: ";
             cin >> code;
             tree.remove(code);
             cout << code << " deleted (if it existed).\n";
+
+        case 3:
+            cout << "Enter code to search: ";
+            cin >> code;
+            if (tree.searchNode(code))
+                cout << code << " FOUND.\n";
+            else
+                cout << code << " NOT found.\n";
             break;
-        
-        
-        
-        
+
+        case 4:
+            cout << "Enter existing code: ";
+            cin >> oldValue;
+            cout << "Enter new value: ";
+            cin >> newValue;
+            tree.remove(oldValue);
+            tree.insertNode(newValue);
+            cout << "Record updated.\n";
+            break;
+
+        case 5:
+            cout << "\nDisplaying all records:\n";
+            tree.displayInOrder();
+            break;
+
+        case 6:
+            cout << "Exiting...\n";
+            break;
+
+        default:
+            cout << "Invalid option.\n";
         }
-    }
+
+    } while (choice != 6);
+
     return 0;
 }
+    
+   
+
 
