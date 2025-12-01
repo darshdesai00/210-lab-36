@@ -1,19 +1,30 @@
 #include <iostream>
 #include "IntBinaryTree.h"
+#include <fstream>
+#include <string>
 using namespace std;
 
 int main() {
 
     IntBinaryTree tree;
+    ifstream infile("codes.txt")
 
-    cout << "Testing string BST...\n";
+    if(!infile){
+        cout << "Error: Could not open codes.txt\n";
+        return 1;
+    }
 
-    tree.insertNode("ABC123");
-    tree.insertNode("HELLO1");
-    tree.insertNode("Z9X8");
-    tree.insertNode("CODE55");
-    tree.insertNode("APPLE22");
+    cout << "Loading record from the codes.txt file...\n";
 
+    string code;
+
+    while (infile >> code) {
+        tree.insertNode(code);
+    }
+
+    infile.close();
+    cout << "All records have been loaded into the BST.\n\n"
+    
     cout << "\nInorder traversal (alphabetical):\n";
     tree.displayInOrder();
 
