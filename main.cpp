@@ -56,6 +56,7 @@ int main() {
             cin >> code;
             tree.remove(code);
             cout << code << " deleted (if it existed).\n";
+            break;   // <-- REQUIRED FIX
 
         case 3:
             cout << "Enter code to search: ";
@@ -93,7 +94,4 @@ int main() {
 
     return 0;
 }
-    
-   
-
 
