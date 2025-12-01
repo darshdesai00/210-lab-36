@@ -122,7 +122,32 @@ void IntBinaryTree::makeDeletion(TreeNode *&nodePtr) {
       tempNodePtr = nodePtr;
       nodePtr = nodePtr->right;  // Reattach the right child
       delete tempNodePtr;
-   
+   }
+   // If the node has two children.
+   else {
+      // Move one node the right.
+      tempNodePtr = nodePtr->right;
+      // Go to the end left node.
+      while (tempNodePtr->left)
+         tempNodePtr = tempNodePtr->left;
+      // Reattach the left subtree.
+      tempNodePtr->left = nodePtr->left;
+      tempNodePtr = nodePtr;
+      // Reattach the right subtree.
+      nodePtr = nodePtr->right;
+      delete tempNodePtr;
+   }
+}
+
+// The displayInOrder member function displays the values       
+// in the subtree pointed to by nodePtr, via inorder traversal. 
+void IntBinaryTree::displayInOrder(TreeNode *nodePtr) const {
+   if (nodePtr) {
+      displayInOrder(nodePtr->left);
+      cout << nodePtr->value << endl;
+      displayInOrder(nodePtr->right);
+   }
+}
 
 // The displayPreOrder member function displays the values      
 // in the subtree pointed to by nodePtr, via preorder traversal.
