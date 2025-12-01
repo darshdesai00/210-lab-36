@@ -7,7 +7,7 @@ using namespace std;
 int main() {
 
     IntBinaryTree tree;
-    ifstream infile("codes.txt")
+    ifstream infile("codes.txt");
 
     if(!infile){
         cout << "Error: Could not open codes.txt\n";
@@ -23,7 +23,7 @@ int main() {
     }
 
     infile.close();
-    cout << "All records have been loaded into the BST.\n\n"
+    cout << "All records have been loaded into the BST.\n\n";
     
     cout << "\nInorder traversal (alphabetical):\n";
     tree.displayInOrder();
